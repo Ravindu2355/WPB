@@ -15,4 +15,4 @@ COPY . .
 EXPOSE 8000
 
 # Start bot
-CMD ["node", "bot.js"]
+CMD ["node", "index.js"]
