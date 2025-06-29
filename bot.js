@@ -94,7 +94,7 @@ async function startBot() {
          await sock.sendMessage(from, { text: '❌ Failed to upload video.' });
        }
      } else {
-       await sock.sendMessage(from, { text: '👋 I received your message!' });
+       await sock.sendMessage(from, { text: '👋 I received your message!.' });
      }
   });
 }
