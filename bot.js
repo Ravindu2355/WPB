@@ -85,6 +85,8 @@ async function startBot() {
           sender: msg.pushName || 'Unknown',
         });
         console.log('🌐 Message sent to webhook');
+      }else{
+        console.log('❌️ No web hook value:- '+webhookURL);
       }
     } catch (err) {
       console.error('🚨 Failed to send to webhook:', err.message);
