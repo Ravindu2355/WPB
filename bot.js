@@ -4,14 +4,16 @@ const fs = require('fs');
 const axios = require('axios');
 
 const webhookURLFile = 'https://raw.githubusercontent.com/Ravindu2355/WPB/main/wbh.txt';
-let webhookURL = null;
+var st ={
+  webhookURL:null
+}
 let sock;
 
 async function fetchWebhookURL() {
   try {
     const res = await axios.get(webhookURLFile);
-    webhookURL = res.data.trim(); // remove any newlines/spaces
-    console.log('✅ Webhook URL fetched:', webhookURL);
+    st.webhookURL = res.data.trim(); // remove any newlines/spaces
+    console.log('✅ Webhook URL fetched:', st.webhookURL);
   } catch (err) {
     console.error('❌ Failed to fetch webhook URL:', err.message);
   }
@@ -118,4 +120,4 @@ function getSock() {
   return sock;
 }
 
-module.exports = { startBot, getSock, fetchWebhookURL };
+module.exports = { startBot, getSock, fetchWebhookURL, st };
