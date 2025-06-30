@@ -4,7 +4,7 @@ const path = require('path');
 const { lookup } = require('mime-types');
 const https = require('https');
 const httpLib = require('http');
-const { getSock, fetchWebhookURL } = require('./bot');
+const { getSock, fetchWebhookURL, state } = require('./bot');
 const { downloadFile, downloadFileStream } = require('./utils');
 
 function startHttpServer() {
@@ -23,7 +23,7 @@ function startHttpServer() {
       try {
         await fetchWebhookURL();
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ ok: true, refreshed: true }));
+        res.end(JSON.stringify({ ok: true, refreshed: true, newState: state }));
       } catch (err) {
         res.writeHead(500, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ error: err.toString() }));
