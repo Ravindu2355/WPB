@@ -116,4 +116,4 @@ function getSock() {
   return sock;
 }
 
-module.exports = { startBot, getSock };
+module.exports = { startBot, getSock, fetchWebhookURL };
