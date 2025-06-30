@@ -18,6 +18,11 @@ function startHttpServer() {
       res.writeHead(204);
       return res.end();
     }
+
+    if (req.url === '/state') {
+      res.writeHead(200);
+      res.end(JSON.stringify({ ok: true, refreshed: true, newState: state }));
+    }
     
     if (req.url === '/refresh') {
       try {
