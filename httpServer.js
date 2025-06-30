@@ -4,7 +4,7 @@ const path = require('path');
 const { lookup } = require('mime-types');
 const https = require('https');
 const httpLib = require('http');
-const { getSock } = require('./bot');
+const { getSock, fetchWebhookURL } = require('./bot');
 const { downloadFile, downloadFileStream } = require('./utils');
 
 function startHttpServer() {
@@ -18,7 +18,19 @@ function startHttpServer() {
       res.writeHead(204);
       return res.end();
     }
-
+    
+    if (req.url === '/refresh') {
+      try {
+        await fetchWebhookURL();
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ ok: true, refreshed: true }));
+      } catch (err) {
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: err.toString() }));
+      }
+      return;
+    }
+    
     if (req.url === '/qr') {
       const filePath = path.join(__dirname, 'qr.png');
       if (fs.existsSync(filePath)) {
