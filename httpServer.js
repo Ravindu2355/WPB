@@ -65,6 +65,83 @@ function startHttpServer() {
       return;
     }
 
+    // API: /api/sendPhoto (POST) — Send image with caption
+    if (req.url === '/api/sendPhoto' && req.method === 'POST') {
+      let body = '';
+      req.on('data', chunk => (body += chunk));
+      req.on('end', async () => {
+         try {
+           const { to, fileUrl, caption = '' } = JSON.parse(body);
+           const sock = getSock();
+           if (!sock) throw 'Bot not connected';
+
+           const buffer = await downloadFile(fileUrl);
+           await sock.sendMessage(to, {
+             image: buffer,
+             caption
+           });
+
+           res.end(JSON.stringify({ ok: true, sent: true }));
+         } catch (err) {
+           res.writeHead(500);
+           res.end(JSON.stringify({ error: err.toString() }));
+         }
+      });
+      return;
+    }
+
+    // API: /api/sendVideo (POST) — Send video with caption
+    if (req.url === '/api/sendVideo' && req.method === 'POST') {
+      let body = '';
+      req.on('data', chunk => (body += chunk));
+      req.on('end', async () => {
+         try {
+           const { to, fileUrl, caption = '' } = JSON.parse(body);
+           const sock = getSock();
+           if (!sock) throw 'Bot not connected';
+
+           const buffer = await downloadFile(fileUrl);
+           await sock.sendMessage(to, {
+              video: buffer,
+              caption,
+              mimetype: 'video/mp4' // or autodetect using mime-types
+           });
+
+           res.end(JSON.stringify({ ok: true, sent: true }));
+         } catch (err) {
+           res.writeHead(500);
+           res.end(JSON.stringify({ error: err.toString() }));
+         }
+      });
+      return;
+    }
+
+    // API: /api/sendAudio (POST) — Send audio/voice
+    if (req.url === '/api/sendAudio' && req.method === 'POST') {
+      let body = '';
+      req.on('data', chunk => (body += chunk));
+      req.on('end', async () => {
+         try {
+           const { to, fileUrl, ptt = false } = JSON.parse(body); // ptt: true = send as voice note
+           const sock = getSock();
+           if (!sock) throw 'Bot not connected';
+
+           const buffer = await downloadFile(fileUrl);
+           await sock.sendMessage(to, {
+             audio: buffer,
+             mimetype: 'audio/mpeg',
+             ptt
+           });
+
+           res.end(JSON.stringify({ ok: true, sent: true }));
+         } catch (err) {
+           res.writeHead(500);
+           res.end(JSON.stringify({ error: err.toString() }));
+         }
+      });
+      return;
+    }
+    
     // New API: /api/uploadAsStream (Send file as stream)
     if (req.url === '/api/uploadAsStream' && req.method === 'POST') {
       let body = '';
