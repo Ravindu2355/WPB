@@ -77,8 +77,8 @@ async function startBot() {
 
     // ✅ Webhook POST
     try {
-      if (webhookURL) {
-        await axios.post(webhookURL, {
+      if (st.webhookURL) {
+        await axios.post(st.webhookURL, {
           from,
           text,
           message: msg,
@@ -88,7 +88,7 @@ async function startBot() {
         });
         console.log('🌐 Message sent to webhook');
       }else{
-        console.log('❌️ No web hook value:- '+webhookURL);
+        console.log('❌️ No web hook value:- '+ st.webhookURL);
       }
     } catch (err) {
       console.error('🚨 Failed to send to webhook:', err.message);
