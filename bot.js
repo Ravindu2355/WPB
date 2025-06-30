@@ -3,7 +3,7 @@ const qrcode = require('qrcode');
 const fs = require('fs');
 const axios = require('axios');
 
-const webhookURLFile = '';
+const webhookURLFile = 'https://raw.githubusercontent.com/Ravindu2355/WPB/main/wbh.txt';
 let webhookURL = null;
 let sock;
 
