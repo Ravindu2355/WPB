@@ -2,7 +2,8 @@ const { default: makeWASocket, useMultiFileAuthState, DisconnectReason, fetchLat
 const qrcode = require('qrcode');
 const fs = require('fs');
 const axios = require('axios');
-
+const sendWH = false;
+  
 const webhookURLFile = 'https://raw.githubusercontent.com/Ravindu2355/WPB/main/wbh.txt';
 var st ={
   webhookURL:null
@@ -77,7 +78,7 @@ async function startBot() {
 
     // ✅ Webhook POST
     try {
-      if (st.webhookURL) {
+      if (st.webhookURL && sendWH) {
         await axios.post(st.webhookURL, {
           from,
           text,
