@@ -49,10 +49,11 @@ async function startBot() {
       if (fs.existsSync('qr.png')) fs.unlinkSync('qr.png');
 
       if (code !== DisconnectReason.loggedOut) {
-        console.log('⏱️waition 5s before reconnect!...')
-        await sleep(5000);
-        console.log('🔁 Reconnecting...');
-        await startBot();
+        console.log('🔴visit /retry to reconntect the bot...');
+        //console.log('⏱️waition 5s before reconnect!...')
+        //await sleep(5000);
+        //console.log('🔁 Reconnecting...');
+        //await startBot();
       } else {
         console.log('👋 Logged out. Delete auth folder to relogin.');
       }
