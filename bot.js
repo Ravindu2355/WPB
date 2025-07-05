@@ -3,7 +3,9 @@ const qrcode = require('qrcode');
 const fs = require('fs');
 const axios = require('axios');
 const sendWH = false;
-  
+// Helper: sleep for X milliseconds
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 const webhookURLFile = 'https://raw.githubusercontent.com/Ravindu2355/WPB/main/wbh.txt';
 var st ={
   webhookURL:null
@@ -47,8 +49,10 @@ async function startBot() {
       if (fs.existsSync('qr.png')) fs.unlinkSync('qr.png');
 
       if (code !== DisconnectReason.loggedOut) {
+        console.log('⏱️waition 5s before reconnect!...')
+        await sleep(5000);
         console.log('🔁 Reconnecting...');
-        startBot();
+        await startBot();
       } else {
         console.log('👋 Logged out. Delete auth folder to relogin.');
       }
