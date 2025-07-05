@@ -4,7 +4,7 @@ const path = require('path');
 const { lookup } = require('mime-types');
 const https = require('https');
 const httpLib = require('http');
-const { getSock, fetchWebhookURL, st } = require('./bot');
+const { startBot, getSock, fetchWebhookURL, st } = require('./bot');
 const { downloadFile, downloadFileStream } = require('./utils');
 
 function startHttpServer() {
@@ -22,6 +22,12 @@ function startHttpServer() {
     if (req.url === '/' && req.method === 'GET') {
      res.writeHead(200, { 'Content-Type': 'text/plain' });
      return res.end('👋 Hello World! WhatsApp Bot API is running.');
+    }
+
+    if (req.url === '/retry' && req.method === 'GET') {
+     res.writeHead(200, { 'Content-Type': 'text/plain' });
+      await startBot();
+     return res.end('WhatsApp Bot API is starting!...');
     }
     
     if (req.url === '/state') {
