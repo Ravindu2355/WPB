@@ -85,6 +85,8 @@ async function startBot() {
           timestamp: msg.messageTimestamp,
           messageId: msg.key.id,
           sender: msg.pushName || 'Unknown',
+        },{
+        timeout: 5000 // timeout in milliseconds (5 seconds)
         });
         console.log('🌐 Message sent to webhook');
       }else{
