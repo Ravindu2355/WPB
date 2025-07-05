@@ -26,8 +26,13 @@ function startHttpServer() {
 
     if (req.url === '/retry' && req.method === 'GET') {
      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      await startBot();
-     return res.end('WhatsApp Bot API is starting!...');
+      if(st.bot == 0){
+        await startBot();
+        return res.end('WhatsApp Bot API is starting!...');
+      }else{
+        console.log('✅️Alredy started!...');
+        return res.end('WhatsApp Bot API is Alredy started!...');
+      } 
     }
     
     if (req.url === '/state') {
