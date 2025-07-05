@@ -19,6 +19,11 @@ function startHttpServer() {
       return res.end();
     }
 
+    if (req.url === '/' && req.method === 'GET') {
+     res.writeHead(200, { 'Content-Type': 'text/plain' });
+     return res.end('👋 Hello World! WhatsApp Bot API is running.');
+    }
+    
     if (req.url === '/state') {
       res.writeHead(200);
       res.end(JSON.stringify({ ok: true, state: st }));
